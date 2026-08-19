@@ -144,3 +144,54 @@ Segment-Specific Pricing Strategies: Develop and implement more granular, segmen
 Optimize Inventory for Volume vs. Profit Drivers:
 Volume Drivers: Ensure these products are consistently well-stocked to maintain customer traffic and overall sales volume.
 Profit Drivers: Optimize merchandising and pricing strategies for products that generate the most revenue (profit drivers) to maximize financial returns, even if they don't sell in the highest volume.
+
+# Automated MIS Reporting & KPI Dashboard
+
+## 📌 Overview
+An end-to-end Excel-based MIS (Management Information System) dashboard that consolidates sales, employee, branch, and product data into a single automated reporting system — complete with data validation checks, dynamic pivot-style summaries, interactive filters, and a one-click VBA refresh macro.
+
+## 🎯 Problem Statement
+Sales operations teams often struggle to consolidate data scattered across multiple sources (raw transactions, employee records, branch/product masters, targets) into a single, reliable, decision-ready report. This project builds a fully formula-driven MIS dashboard that automatically merges, validates, and summarizes this data — eliminating manual reconciliation and reducing reporting errors.
+
+## 🗂️ Data Structure
+The workbook is built on a relational, multi-sheet structure:
+| Sheet | Purpose |
+|---|---|
+| `Sales_Data` | Raw transactional records (date, branch, employee, product, qty, revenue, target) — 1,000 rows |
+| `Employee_Master` | Employee ID, name, department, manager, region |
+| `Branch_Master` | Branch, city, state mapping |
+| `Product_Master` | Product code, category, price |
+| `Targets` | Monthly revenue targets per branch |
+| `Merged_Data` | Consolidated table joining all sources via INDEX-MATCH lookups |
+| `Data_Quality_Checks` | Automated validation checks on the raw data |
+| `Dashboard` | Final KPI summary, pivot-style tables, and visual report |
+| `Filters` / `FilterLists` | Dropdown-based filtered view (slicer substitute) |
+| `Macro_RefreshDashboard` | VBA macro documentation and button |
+
+## 🔧 Approach
+1. **Data Consolidation** – Used `INDEX-MATCH` (wrapped in `IFERROR`) to enrich every raw sales transaction with employee, branch, product, and target details into a single `Merged_Data` table — the single source of truth for the dashboard.
+2. **Data Quality Checks** – Built automated validation formulas using `SUMPRODUCT`, `COUNTIF`, and `COUNTBLANK` to flag duplicate employee IDs, blank revenue entries, and invalid product codes before they reach the report.
+3. **KPI Calculation** – Computed core metrics (Total Revenue, Total Orders, Average Order Value, Target Achievement %) using `SUM`, `COUNTA`, `AVERAGE`, and `ROUND`.
+4. **Pivot-Style Summaries** – Built dynamic breakdowns by Month, Branch, Region, Department, Product Category, and Top 10 Employees using `SUMIF`, `INDEX`, `MATCH`, and `LARGE` — replicating pivot table functionality with live formulas.
+5. **MoM Growth Tracking** – Calculated month-over-month revenue growth % using `=(Current - Previous)/Previous`.
+6. **Interactive Filtering** – Implemented dropdown-based filters (Branch, Department, Month, Region) as a slicer substitute using Data Validation lists.
+7. **Automation via VBA** – Added a `RefreshDashboard` macro (triggered by a button) that recalculates all formulas and resets filters to "(All)" with a single click.
+
+## 🛠️ Tech Stack
+- **Tool:** Microsoft Excel (Macro-Enabled Workbook, `.xlsm`)
+- **Formulas:** INDEX-MATCH, SUMIF, SUMPRODUCT, COUNTIF, COUNTA, COUNTBLANK, LARGE, IFERROR, TEXT, ROUND
+- **Automation:** VBA (macro-based dashboard refresh)
+- **Techniques:** Data Validation, Data Quality Auditing, MIS Reporting, KPI Tracking, MoM Growth Analysis
+
+## 📈 Key Features
+- **Live, formula-driven dashboard** — no static/pasted values; every KPI recalculates automatically as source data changes
+- **Built-in data quality layer** — flags duplicate records, blank fields, and invalid references before they affect reporting
+- **Multi-dimensional breakdowns** — revenue by month, branch, region, department, product category, and top-performing employees
+- **One-click refresh** — VBA macro recalculates all formulas and resets filters instantly
+
+## 🚀 How to Run
+1. Download `mis_kpi_dashboard.xlsm` and open in Excel (enable macros when prompted)
+2. Review raw data in `Sales_Data`, `Employee_Master`, `Branch_Master`, `Product_Master`, `Targets`
+3. View the consolidated dataset in `Merged_Data` and validation results in `Data_Quality_Checks`
+4. Open the `Dashboard` tab to view KPIs and pivot-style summaries
+5. Use the `Filters` tab to filter the view, or click **"Refresh Dashboard"** to recalculate everything and reset filters.
